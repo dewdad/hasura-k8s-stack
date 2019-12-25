@@ -1,4 +1,4 @@
-# Default values for hasura-chart.
+# Default values for postgres.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -64,7 +64,3 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-
-global:
-  postgres:
-    enabled: true
