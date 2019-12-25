@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: nginx
+  repository: hasura/graphql-engine
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
@@ -33,6 +33,7 @@ securityContext: {}
 service:
   type: ClusterIP
   port: 80
+  containerPort: 8080
 
 ingress:
   enabled: false
@@ -65,6 +66,15 @@ tolerations: []
 
 affinity: {}
 
-global:
-  postgres:
-    enabled: true
+env:
+  enableConsole: true
+  enabledLogTypes: startup,http-log,webhook-log,websocket-log,query-log
+  authHook:
+    enabled: false
+    value: <hook url>
+  jwtSecret:
+    enabled: false
+    value: <jwt token authentication>
+
+postgres:
+  enabled: false

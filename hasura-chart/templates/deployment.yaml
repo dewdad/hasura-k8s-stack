@@ -27,18 +27,32 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: HASURA_GRAPHQL_DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  key: dburl
+                  name: {{ include "hasura-chart.fullname" . }}
+            - name: HASURA_GRAPHQL_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: accessKey
+                  name: {{ include "hasura-chart.fullname" . }}
+            - name: HASURA_GRAPHQL_ENABLE_CONSOLE
+              value: {{ .Values.env.enableConsole | quote }}
+            - name: HASURA_GRAPHQL_ENABLED_LOG_TYPES
+              value: {{ .Values.env.enabledLogTypes | quote }}
+            {{- if .Values.env.jwtSecret.enabled }}
+            - name: HASURA_GRAPHQL_JWT_SECRET
+              value: {{ .Values.env.jwtSecret.value | quote }}
+            {{- end }}
+            {{- if .Values.env.authHook.enabled }}
+            - name: HASURA_GRAPHQL_AUTH_HOOK
+              value: {{ .Values.env.authHook.value | quote }}
+            {{- end }}
           ports:
-            - name: http
-              containerPort: 80
+            - containerPort: {{ .Values.service.containerPort }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
