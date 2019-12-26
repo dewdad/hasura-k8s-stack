@@ -46,17 +46,9 @@ spec:
             - name: PGDATA
               value: /var/lib/postgresql/data/pgdata
           ports:
-            - name: http
-              containerPort: 80
+            - containerPort: {{ .Values.service.containerPort }}
+              name: postgres_default
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
