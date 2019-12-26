@@ -42,13 +42,13 @@ spec:
               value: {{ .Values.env.enableConsole | quote }}
             - name: HASURA_GRAPHQL_ENABLED_LOG_TYPES
               value: {{ .Values.env.enabledLogTypes | quote }}
-            {{- if .Values.env.jwtSecret.enabled }}
+            {{- if .Values.auth.jwt.enabled }}
             - name: HASURA_GRAPHQL_JWT_SECRET
-              value: {{ .Values.env.jwtSecret.value | quote }}
+              value: {{ .Values.env.jwtSecret | quote }}
             {{- end }}
-            {{- if .Values.env.authHook.enabled }}
+            {{- if .Values.auth.hook.enabled }}
             - name: HASURA_GRAPHQL_AUTH_HOOK
-              value: {{ .Values.env.authHook.value | quote }}
+              value: {{ .Values.env.authHook | quote }}
             {{- end }}
           ports:
             - containerPort: {{ .Values.service.containerPort }}
