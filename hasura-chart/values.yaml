@@ -77,4 +77,4 @@ env:
     value: <jwt token authentication>
 
 postgres:
-  enabled: false
+  enabled: true

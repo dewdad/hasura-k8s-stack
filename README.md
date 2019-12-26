@@ -89,6 +89,17 @@ Hasura should be available as `http://hasura:80` inside the cluster. This
 service can be publicly exposed with an ingress rule and we'll explore it in the
 ingress section.
 
+#### Installation using Helm 3
+```shell script
+helm install --set postgres.secrets.enabled=true --set postgres.secrets.password=MyPassWd123 \
+--set postgres.secrets.username=hasurauser --set postgres.secrets.dbname=hasura_db --set secrets.enabled=true \
+--set secrets.accessKey=accessKey --set secrets.dburl=postgres://hasurauser:MyPassWd123@hasura-postgres:5432/hasura_db \
+hasura hasura-chart
+
+```
+
+Hasura can be installed on other namespace using `-n=<namespace>` flag.
+
 #### Scaling
 
 Hasura can be horizontally scaled without any side-effects. Just increase the

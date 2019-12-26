@@ -25,3 +25,6 @@ dependencies:
     repository: http://localhost:10191
     version: 11.1
     condition: postgres.enabled, global.postgres.enabled
+#  - name: postgresql
+#    repository: https://kubernetes-charts.storage.googleapis.com/
+#    version: 8.1.1
